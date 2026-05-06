@@ -8,7 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="cssself.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/author.css">
+    <link rel="stylesheet" href="css/timer.css">
 </head>
 <body class="bg-gray-50">
     <!-- Floating Glass Navbar -->
@@ -53,7 +58,6 @@
                     <button id="add-todo-btn" class="bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-2xl p-3 hover:from-sky-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-sky-400 transition-all duration-300 transform hover:scale-105">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                    </svg>
                     </svg>
                     </button>
                 </div>
@@ -523,6 +527,29 @@
             Created with <span class="heart">❤</span> by <strong>Pranay</strong> & <strong>Prabhat</strong>
         </span>
     </div>
-    <script src="jsself.js"></script>
+
+    <!-- API Key Modal -->
+    <div id="api-key-modal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-semibold text-gray-800">Configure API Key</h3>
+            </div>
+            <div class="space-y-4">
+                <p class="text-sm text-gray-600">Enter your Gemini API key to enable AI features. Your key is stored locally in your browser.</p>
+                <input type="password" id="api-key-input" class="custom-input w-full" placeholder="Enter your API key...">
+                <div class="flex gap-3">
+                    <button onclick="setApiKey(document.getElementById('api-key-input').value)" class="flex-1 bg-gradient-to-r from-sky-500 to-blue-600 text-white px-4 py-2 rounded-xl font-semibold hover:from-sky-600 hover:to-blue-700 transition duration-300">
+                        Save Key
+                    </button>
+                    <button onclick="document.getElementById('api-key-modal').classList.remove('show')" class="px-4 py-2 rounded-xl border border-gray-300 text-gray-600 hover:bg-gray-50 transition duration-300">
+                        Cancel
+                    </button>
+                </div>
+                <p class="text-xs text-gray-500">Get your API key from <a href="https://aistudio.google.com/apikey" target="_blank" class="text-blue-500 hover:underline">Google AI Studio</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
     </body>
 </html>

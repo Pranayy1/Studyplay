@@ -1,0 +1,119 @@
+/* base.css - Base styles, variables, and reset */
+
+:root {
+    /* Ravtut palette */
+    --primary-color: #6366F1;
+    --primary-light: #818CF8;
+    --primary-dark: #4F46E5;
+    --secondary-color: #14B8A6;
+    --accent-color: #F59E0B;
+    --primary-gradient: linear-gradient(90deg, #6366F1 0%, #818CF8 100%);
+    --accent-gradient: linear-gradient(90deg, #F59E0B 0%, #FBBF24 100%);
+    --glass-bg: rgba(255,255,255,0.8);
+    --glass-bg-strong: rgba(255,255,255,0.95);
+    --glass-border: rgba(229,231,235,0.6);
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Glass surfaces */
+.glass {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+}
+
+.glass-strong {
+    background: var(--glass-bg-strong);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(226,232,240,0.75);
+    border-radius: 12px;
+}
+
+/* Text Styles */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: #64748b; }
+.text-blue { color: #0ea5e9; }
+
+/* Ensure proper box-sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Fix SVG rendering */
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Button base styles */
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+/* Main content area */
+.main-content {
+    margin-top: 100px;
+    padding: 0 20px;
+}
+
+.section-title {
+    color: var(--text-primary);
+    text-shadow: 0 2px 4px rgba(255,255,255,0.8);
+}
+
+/* Card Styles */
+.card {
+    background: rgba(255,255,255,0.6);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(229,231,235,0.6);
+    border-radius: 16px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(15,23,42,0.06);
+}
+
+.card-gradient {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+}
