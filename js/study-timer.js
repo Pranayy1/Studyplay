@@ -1,43 +1,45 @@
-// study-timer.js - Study timer functionality
-
-let studyTimerInterval = null;
 let totalSeconds = 0;
+let studyTimerInterval = null;
 
 export function initStudyTimer() {
     const studyTimeEl = document.getElementById('study-time');
 
-    function startStudyTimer() {
-        if (studyTimerInterval) return;
+    const savedTime = localStorage.getItem('studyTimeSeconds');
+    const savedDate = localStorage.getItem('studyTimeDate');
+    const today = new Date().toDateString();
 
-        studyTimerInterval = setInterval(() => {
-            if (document.hidden) return;
-
-            totalSeconds++;
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            if (studyTimeEl) {
-                studyTimeEl.textContent = `${hours}h ${minutes.toString().padStart(2, '0')}m`;
-            }
-        }, 1000);
+    if (savedTime && savedDate === today) {
+        totalSeconds = parseInt(savedTime, 10);
     }
 
-    function stopStudyTimer() {
-        if (studyTimerInterval) {
-            clearInterval(studyTimerInterval);
-            studyTimerInterval = null;
-        }
+    function saveTime() {
+        localStorage.setItem('studyTimeSeconds', totalSeconds.toString());
+        localStorage.setItem('studyTimeDate', today);
     }
 
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            stopStudyTimer();
-        } else {
-            startStudyTimer();
+    function updateDisplay() {
+        if (!studyTimeEl) return;
+        const h = Math.floor(totalSeconds / 3600);
+        const m = Math.floor((totalSeconds % 3600) / 60);
+        studyTimeEl.textContent = `${h}h ${String(m).padStart(2, '0')}m`;
+    }
+
+    let last = Date.now();
+    studyTimerInterval = setInterval(() => {
+        const now = Date.now();
+        const elapsed = Math.floor((now - last) / 1000);
+        if (elapsed >= 1) {
+            totalSeconds += elapsed;
+            last = now;
+            updateDisplay();
+            saveTime();
         }
-    });
+    }, 1000);
 
-    if (studyTimeEl) studyTimeEl.textContent = '0h 00m';
-    startStudyTimer();
+    updateDisplay();
 
-    return { totalSeconds, startStudyTimer, stopStudyTimer };
+    return {
+        get totalSeconds() { return totalSeconds; },
+        stop: () => { clearInterval(studyTimerInterval); studyTimerInterval = null; }
+    };
 }

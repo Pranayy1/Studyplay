@@ -1,7 +1,6 @@
 /* base.css - Base styles, variables, and reset */
 
 :root {
-    /* Ravtut palette */
     --primary-color: #6366F1;
     --primary-light: #818CF8;
     --primary-dark: #4F46E5;
@@ -9,39 +8,21 @@
     --accent-color: #F59E0B;
     --primary-gradient: linear-gradient(90deg, #6366F1 0%, #818CF8 100%);
     --accent-gradient: linear-gradient(90deg, #F59E0B 0%, #FBBF24 100%);
-    --glass-bg: rgba(255,255,255,0.8);
-    --glass-bg-strong: rgba(255,255,255,0.95);
-    --glass-border: rgba(229,231,235,0.6);
+    --glass-bg: rgba(255,255,255,0.7);
+    --glass-bg-strong: rgba(255,255,255,0.9);
+    --glass-border: rgba(229,231,235,0.5);
     --text-primary: #0F172A;
     --text-secondary: #64748B;
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
+    background: #F8FAFC;
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
-    position: relative;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3) 0%, transparent 70%);
-    z-index: -1;
-    pointer-events: none;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
 }
 
 /* Glass surfaces */
@@ -57,7 +38,7 @@ body::before {
     background: var(--glass-bg-strong);
     -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(226,232,240,0.75);
+    border: 1px solid rgba(226,232,240,0.6);
     border-radius: 12px;
 }
 
@@ -94,26 +75,20 @@ button {
 
 .section-title {
     color: var(--text-primary);
-    text-shadow: 0 2px 4px rgba(255,255,255,0.8);
 }
 
 /* Card Styles */
 .card {
-    background: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.5);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(229,231,235,0.6);
+    border: 1px solid rgba(229,231,235,0.5);
     border-radius: 16px;
     padding: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(15,23,42,0.06);
-}
-
-.card-gradient {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(15,23,42,0.04);
 }

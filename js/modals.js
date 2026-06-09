@@ -83,6 +83,6 @@ export function initModals() {
     setupModalClickOutside('pomodoro-modal', () => closeModal('pomodoro-modal'));
     setupModalClickOutside('analytics-modal', closeAnalytics);
 
-    window.closeModal = () => closeModal('llm-modal');
+    window.closeModal = closeModal;
     window.closeAnalytics = closeAnalytics;
 }

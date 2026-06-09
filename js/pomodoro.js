@@ -1,6 +1,6 @@
 // pomodoro.js - Pomodoro Timer Functionality
 import { CONFIG } from './config.js';
-import { log } from './utils.js';
+import { log, formatTime as fmtTime } from './utils.js';
 
 let pomodoroSeconds = 1500;
 let originalSeconds = 1500;
@@ -39,15 +39,10 @@ export function initPomodoro() {
     const breakDurationInput = document.getElementById('break-duration');
     const longBreakInput = document.getElementById('long-break');
 
-    function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-    }
-
     function updateTimerDisplay() {
-        if (timerDisplay) timerDisplay.textContent = formatTime(pomodoroSeconds);
-        if (floatingDisplay) floatingDisplay.textContent = formatTime(pomodoroSeconds);
+        const t = fmtTime(pomodoroSeconds);
+        if (timerDisplay) timerDisplay.textContent = t;
+        if (floatingDisplay) floatingDisplay.textContent = t;
     }
 
     function updateCustomSettings() {
@@ -148,34 +143,34 @@ export function initPomodoro() {
 
     function startPomodoro() {
         updateCustomSettings();
+        if (isRunning) return;
+        isRunning = true;
+        openFloatingTimer();
+        if (startTimerBtn) startTimerBtn.textContent = 'Pause';
+        if (floatingStart) floatingStart.textContent = '⏸';
 
-        if (isRunning) {
-            clearInterval(pomodoroTimer);
-            isRunning = false;
-            if (startTimerBtn) startTimerBtn.textContent = 'Start';
-            if (floatingStart) floatingStart.textContent = '▶';
-        } else {
-            isRunning = true;
-            if (startTimerBtn) startTimerBtn.textContent = 'Pause';
-            if (floatingStart) floatingStart.textContent = '⏸';
+        pomodoroTimer = setInterval(() => {
+            pomodoroSeconds--;
+            updateTimerDisplay();
 
-            pomodoroTimer = setInterval(() => {
-                pomodoroSeconds--;
-                updateTimerDisplay();
-
-                if (pomodoroSeconds <= 0) {
-                    clearInterval(pomodoroTimer);
-                    switchMode();
-                }
-            }, 1000);
-        }
+            if (pomodoroSeconds <= 0) {
+                clearInterval(pomodoroTimer);
+                isRunning = false;
+                switchMode();
+            }
+        }, 1000);
     }
 
-    function resetPomodoro() {
+    function pausePomodoro() {
+        if (!isRunning) return;
         clearInterval(pomodoroTimer);
         isRunning = false;
         if (startTimerBtn) startTimerBtn.textContent = 'Start';
         if (floatingStart) floatingStart.textContent = '▶';
+    }
+
+    function resetPomodoro() {
+        stopTimer();
 
         updateCustomSettings();
 
@@ -198,7 +193,9 @@ export function initPomodoro() {
     }
 
     function openPomodoroModal() {
+        if (floatingTimer) floatingTimer.classList.remove('show');
         updateCustomSettings();
+        stopTimer();
         pomodoroSeconds = customSettings.sessionDuration * 60;
         originalSeconds = pomodoroSeconds;
         if (timerMode) timerMode.textContent = `🎯 ${customSettings.sessionTitle}`;
@@ -211,6 +208,8 @@ export function initPomodoro() {
     }
 
     function closePomodoroModal() {
+        stopTimer();
+        if (floatingTimer) floatingTimer.classList.remove('show');
         if (pomodoroModal) pomodoroModal.classList.remove('show');
     }
 
@@ -218,17 +217,19 @@ export function initPomodoro() {
         updateCustomSettings();
         if (floatingTitle) floatingTitle.textContent = customSettings.sessionTitle;
         if (floatingTimer) floatingTimer.classList.add('show');
-        closePomodoroModal();
+        if (pomodoroModal) pomodoroModal.classList.remove('show');
+    }
+
+    function stopTimer() {
+        clearInterval(pomodoroTimer);
+        isRunning = false;
+        if (startTimerBtn) startTimerBtn.textContent = 'Start';
+        if (floatingStart) floatingStart.textContent = '▶';
     }
 
     function closeFloatingTimer() {
+        stopTimer();
         if (floatingTimer) floatingTimer.classList.remove('show');
-        if (isRunning) {
-            clearInterval(pomodoroTimer);
-            isRunning = false;
-            if (startTimerBtn) startTimerBtn.textContent = 'Start';
-            if (floatingStart) floatingStart.textContent = '▶';
-        }
     }
 
     function makeDraggable(element) {
@@ -277,16 +278,13 @@ export function initPomodoro() {
 
     // Event Listeners
     if (pomodoroBtn) pomodoroBtn.addEventListener('click', openPomodoroModal);
-    if (startTimerBtn) startTimerBtn.addEventListener('click', () => {
-        startPomodoro();
-        setTimeout(openFloatingTimer, 500);
-    });
-    if (pauseTimerBtn) pauseTimerBtn.addEventListener('click', startPomodoro);
+    if (startTimerBtn) startTimerBtn.addEventListener('click', startPomodoro);
+    if (pauseTimerBtn) pauseTimerBtn.addEventListener('click', pausePomodoro);
     if (resetTimerBtn) resetTimerBtn.addEventListener('click', resetPomodoro);
     if (closePomodoroBtn) closePomodoroBtn.addEventListener('click', closePomodoroModal);
 
     if (floatingStart) floatingStart.addEventListener('click', startPomodoro);
-    if (floatingPause) floatingPause.addEventListener('click', startPomodoro);
+    if (floatingPause) floatingPause.addEventListener('click', pausePomodoro);
     if (floatingReset) floatingReset.addEventListener('click', resetPomodoro);
     if (closeFloating) closeFloating.addEventListener('click', closeFloatingTimer);
 

@@ -1,5 +1,5 @@
 // chatbot.js - Chatbot functionality
-import { apiKey, ensureApiKey, apiUrl } from './config.js';
+import { getApiKey, ensureApiKey, getApiUrl } from './config.js';
 import { log, fetchWithExponentialBackoff } from './utils.js';
 
 const CHATBOT_INSTRUCTIONS = `You are a helpful study assistant for students.
@@ -45,7 +45,8 @@ export function initChatbot() {
         const message = chatInput?.value.trim();
         if (!message || !message.length) return;
 
-        if (!apiKey) {
+        const currentApiKey = getApiKey();
+        if (!currentApiKey) {
             addMessage('API key is not configured. Please add your API key to enable chat functionality.', 'bot');
             return;
         }
@@ -66,7 +67,8 @@ export function initChatbot() {
                 contents: [{ parts: [{ text: fullMessage }] }]
             };
 
-            const response = await fetchWithExponentialBackoff(apiUrl, {
+            const currentApiUrl = getApiUrl();
+            const response = await fetchWithExponentialBackoff(currentApiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)

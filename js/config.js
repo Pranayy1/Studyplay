@@ -31,14 +31,15 @@ function getApiUrl() {
     return apiKey ? `${CONFIG.API.BASE_URL}${CONFIG.API.MODEL}:generateContent?key=${apiKey}` : null;
 }
 
-let apiUrl = getApiUrl();
+function getApiKey() {
+    return apiKey;
+}
 
 function setApiKey(key) {
     const trimmedKey = key.trim();
     if (trimmedKey) {
         localStorage.setItem(CONFIG.API.STORAGE_KEY, trimmedKey);
         apiKey = trimmedKey;
-        apiUrl = getApiUrl();
         const apiKeyModal = document.getElementById('api-key-modal');
         if (apiKeyModal) {
             apiKeyModal.classList.remove('show');
@@ -59,4 +60,4 @@ function ensureApiKey() {
     return true;
 }
 
-export { CONFIG, apiKey, apiUrl, getApiUrl, setApiKey, ensureApiKey };
+export { CONFIG, getApiKey, getApiUrl, setApiKey, ensureApiKey };

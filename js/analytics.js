@@ -30,6 +30,21 @@ export function initAnalytics() {
         lastStudyDate: null
     };
 
+    // Check if we need to reset daily data
+    const today = new Date().toDateString();
+    if (analyticsData.lastStudyDate && analyticsData.lastStudyDate !== today) {
+        const lastDate = new Date(analyticsData.lastStudyDate);
+        const todayDate = new Date();
+        const diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+        
+        if (diffDays > 1) {
+            analyticsData.currentStreak = 0;
+        }
+        
+        // Reset today's time since it's a new day
+        analyticsData.todayTime = 0;
+    }
+
     function updateAnalyticsDisplay() {
         const currentStreakEl = document.getElementById('current-streak');
         const longestStreakEl = document.getElementById('longest-streak');
@@ -64,6 +79,10 @@ export function initAnalytics() {
 
         analyticsData.todayTime += minutes;
         analyticsData.weekTime += minutes;
+
+        // Update weeklyHours for current day (0=Sun, 1=Mon, ...)
+        const dayIndex = new Date().getDay();
+        analyticsData.weeklyHours[dayIndex] = (analyticsData.weeklyHours[dayIndex] || 0) + minutes;
 
         const today = new Date().toDateString();
         if (analyticsData.lastStudyDate !== today) {

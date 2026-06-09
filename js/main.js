@@ -1,5 +1,5 @@
 // main.js - Main initialization file
-import { CONFIG, apiKey, setApiKey, ensureApiKey, apiUrl } from './config.js';
+import { getApiKey, setApiKey, ensureApiKey, getApiUrl } from './config.js';
 import { log, escapeHtml, fetchWithExponentialBackoff } from './utils.js';
 import { initModals, showModal } from './modals.js';
 import { initChatbot } from './chatbot.js';
@@ -22,7 +22,7 @@ function initializeApp() {
     // Initialize all modules
     initModals();
     initChatbot();
-    const todoModule = initTodo();
+    initTodo();
     const analyticsModule = initAnalytics();
     initPomodoro();
     initStudyTimer();
@@ -32,19 +32,35 @@ function initializeApp() {
     window.saveAnalytics = analyticsModule.saveAnalytics;
     window.analyticsData = analyticsModule.analyticsData;
 
+    const apiKeyInput = document.getElementById('api-key-input');
+    if (apiKeyInput) {
+        apiKeyInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                setApiKey(apiKeyInput.value);
+                apiKeyInput.value = '';
+            }
+        });
+    }
+
+    const startLearningBtn = Array.from(document.querySelectorAll('.card.text-center button')).find(b => b.textContent.includes('Start Learning'));
+    if (startLearningBtn) {
+        startLearningBtn.addEventListener('click', () => {
+            const pomodoroBtn = document.getElementById('pomodoro-btn');
+            if (pomodoroBtn) pomodoroBtn.click();
+        });
+    }
+
     // Study Plan Generation
     const generatePlanBtn = document.getElementById('generate-plan-btn');
     if (generatePlanBtn) {
         generatePlanBtn.addEventListener('click', async () => {
-            if (!apiKey) {
-                showModal('llm-modal', 'API Configuration Required',
-                    '<div class="text-center text-red-600">API key is not configured. Please add your API key to enable this feature.</div>');
+            if (!getApiKey()) {
+                showModal('api-key-modal', '', '');
                 return;
             }
 
-            const topic = 'Advanced Mathematics';
-            const goal = 'Mastering Integration';
-            const prompt = `Generate a detailed study plan for a college student in a university-level class. The topic is "${topic}" and the goal is "${goal}". The plan should be realistic and broken down by day over one week. Provide the response as a JSON object with a single "plan" array containing objects, each with "day", "focus", and "tasks" properties. Each "tasks" property should be an array of strings.`;
+            const currentApiUrl = getApiUrl();
+            const prompt = `Generate a detailed study plan for a college student in a university-level class. The plan should be realistic and broken down by day over one week. Provide the response as a JSON object with a single "plan" array containing objects, each with "day", "focus", and "tasks" properties. Each "tasks" property should be an array of strings.`;
 
             const payload = {
                 contents: [{ parts: [{ text: prompt }] }],
@@ -76,7 +92,7 @@ function initializeApp() {
                 '<div class="text-center text-gray-500">Please wait, your personalized study plan is being generated...</div>');
 
             try {
-                const response = await fetchWithExponentialBackoff(apiUrl, {
+                const response = await fetchWithExponentialBackoff(currentApiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -89,15 +105,12 @@ function initializeApp() {
 
                 const planData = JSON.parse(result.candidates[0].content.parts[0].text);
 
-                let planHtml = `<div class="p-4 bg-gray-100 rounded-lg">
-                    <p class="font-semibold text-lg mb-2">Topic: ${escapeHtml(topic)}</p>
-                    <p class="font-semibold text-lg">Goal: ${escapeHtml(goal)}</p>
-                </div>`;
+                let planHtml = '<div class="space-y-4">';
 
                 if (planData.plan && Array.isArray(planData.plan)) {
                     planData.plan.forEach(dayPlan => {
                         if (dayPlan.day && dayPlan.focus && Array.isArray(dayPlan.tasks)) {
-                            planHtml += `<div class="mt-6 border-b pb-4">
+                            planHtml += `<div class="border-b pb-4">
                                 <h4 class="text-lg font-bold text-indigo-600">${escapeHtml(dayPlan.day)}</h4>
                                 <p class="text-md font-semibold text-gray-800">${escapeHtml(dayPlan.focus)}</p>
                                 <ul class="list-disc list-inside mt-2 space-y-1">`;
@@ -108,6 +121,8 @@ function initializeApp() {
                         }
                     });
                 }
+
+                planHtml += '</div>';
 
                 showModal('llm-modal', 'Personalized Study Plan', planHtml);
 
