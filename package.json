@@ -1,0 +1,12 @@
+{
+  "name": "studyplay",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "predeploy": "echo 'Static site - no build needed'",
+    "deploy": "gh-pages -d . --no-history"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}
