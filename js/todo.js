@@ -37,32 +37,43 @@ export function initTodo() {
 
         todos.forEach((todo, i) => {
             const li = document.createElement('li');
-            li.className = 'flex items-center justify-between p-3 rounded-2xl glass-strong transition duration-300 ease-in-out hover:bg-white hover:bg-opacity-20';
+            li.className = 'todo-item' + (todo.completed ? ' completed' : '');
+            if (currentGoalIndex === i) li.style.borderLeft = '3px solid var(--primary)';
             li.dataset.index = i;
-
-            const leftDiv = document.createElement('div');
-            leftDiv.className = 'flex items-center space-x-3';
 
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
+            checkbox.className = 'todo-checkbox';
             checkbox.checked = todo.completed;
-            checkbox.className = 'w-5 h-5 text-sky-500 bg-white bg-opacity-20 border-2 border-sky-400 rounded cursor-pointer focus:ring-2 focus:ring-sky-500';
             checkbox.onclick = () => toggleTodo(i);
 
             const span = document.createElement('span');
             span.textContent = todo.text;
-            span.className = `flex-grow text-slate-800 ${todo.completed ? 'line-through text-opacity-60' : ''}`;
 
-            leftDiv.appendChild(checkbox);
-            leftDiv.appendChild(span);
-            li.appendChild(leftDiv);
+            const btnGroup = document.createElement('div');
+            btnGroup.style.cssText = 'display:flex;gap:4px;flex-shrink:0;';
 
             const setGoalBtn = document.createElement('button');
-            setGoalBtn.textContent = 'Set Goal';
-            setGoalBtn.className = 'bg-gradient-to-r from-sky-500 to-blue-600 text-white text-xs font-medium px-3 py-1.5 rounded-full hover:from-sky-600 hover:to-blue-700 transition duration-300 transform hover:scale-105';
+            setGoalBtn.innerHTML = currentGoalIndex === i ? '⭐' : '☆';
+            setGoalBtn.className = 'todo-star';
+            setGoalBtn.title = currentGoalIndex === i ? 'Current goal' : 'Set as goal';
             setGoalBtn.onclick = () => setGoal(i);
-            li.appendChild(setGoalBtn);
 
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerHTML = '✕';
+            deleteBtn.className = 'todo-delete';
+            deleteBtn.title = 'Delete task';
+            deleteBtn.onclick = (e) => {
+                e.stopPropagation();
+                deleteTodo(i);
+            };
+
+            btnGroup.appendChild(setGoalBtn);
+            btnGroup.appendChild(deleteBtn);
+
+            li.appendChild(checkbox);
+            li.appendChild(span);
+            li.appendChild(btnGroup);
             todoList.appendChild(li);
         });
 
@@ -107,7 +118,7 @@ export function initTodo() {
     }
 
     function setGoal(index) {
-        currentGoalIndex = index;
+        currentGoalIndex = currentGoalIndex === index ? null : index;
         updateUI();
         saveTodos();
     }
@@ -133,6 +144,19 @@ export function initTodo() {
         }
     }
 
+    function deleteTodo(index) {
+        if (index >= 0 && index < todos.length) {
+            todos.splice(index, 1);
+            if (currentGoalIndex === index) {
+                currentGoalIndex = null;
+            } else if (currentGoalIndex !== null && index < currentGoalIndex) {
+                currentGoalIndex--;
+            }
+            updateUI();
+            saveTodos();
+        }
+    }
+
     function saveTodos() {
         try {
             localStorage.setItem(CONFIG.STORAGE.TODOS, JSON.stringify(todos));
@@ -151,5 +175,5 @@ export function initTodo() {
 
     updateUI();
 
-    return { updateUI, setGoal, addTodo, toggleTodo, getTodos: () => todos };
+    return { updateUI, setGoal, addTodo, toggleTodo, deleteTodo, getTodos: () => todos };
 }
