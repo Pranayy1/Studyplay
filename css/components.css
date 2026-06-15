@@ -25,9 +25,9 @@
     justify-content: center;
 }
 
-.icon-blue { background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); }
-.icon-green { background: linear-gradient(135deg, #10B981 0%, #059669 100%); }
-.icon-pink { background: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%); }
+.icon-blue { background: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%); }
+.icon-green { background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%); }
+.icon-pink { background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%); }
 .icon-purple { background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%); }
 .icon-orange { background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); }
 
@@ -71,7 +71,7 @@
 
 .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #3B82F6, #2563EB);
+    background: linear-gradient(90deg, #6366F1, #818CF8);
     border-radius: 9999px;
     transition: width 0.6s ease;
 }
@@ -106,7 +106,7 @@
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #3B82F6, #2563EB);
+    background: linear-gradient(90deg, #6366F1, #818CF8);
     border-radius: 4px;
     transition: width 0.6s ease;
 }
@@ -131,10 +131,10 @@
     align-items: center;
     gap: 6px;
     padding: 6px 12px;
-    background: rgba(59, 130, 246, 0.08);
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.2);
     border-radius: 16px;
     font-size: 0.8rem;
     font-weight: 500;
-    color: #1e40af;
+    color: #4F46E5;
 }
