@@ -1,0 +1,94 @@
+/* base.css - Base styles, variables, and reset */
+
+:root {
+    --primary-color: #6366F1;
+    --primary-light: #818CF8;
+    --primary-dark: #4F46E5;
+    --secondary-color: #14B8A6;
+    --accent-color: #F59E0B;
+    --primary-gradient: linear-gradient(90deg, #6366F1 0%, #818CF8 100%);
+    --accent-gradient: linear-gradient(90deg, #F59E0B 0%, #FBBF24 100%);
+    --glass-bg: rgba(255,255,255,0.7);
+    --glass-bg-strong: rgba(255,255,255,0.9);
+    --glass-border: rgba(229,231,235,0.5);
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #EEF2FF 0%, #F0F9FF 50%, #F8FAFC 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glass surfaces */
+.glass {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+}
+
+.glass-strong {
+    background: var(--glass-bg-strong);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(226,232,240,0.6);
+    border-radius: 12px;
+}
+
+/* Text Styles */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: #64748b; }
+.text-blue { color: #0ea5e9; }
+
+/* Ensure proper box-sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Fix SVG rendering */
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Button base styles */
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+/* Main content area */
+.main-content {
+    margin-top: 100px;
+    padding: 0 20px;
+}
+
+.section-title {
+    color: var(--text-primary);
+}
+
+/* Card Styles */
+.card {
+    background: rgba(255,255,255,0.5);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(229,231,235,0.5);
+    border-radius: 16px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(15,23,42,0.04);
+}

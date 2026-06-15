@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPlay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 36 36%22><rect width=%2236%22 height=%2236%22 rx=%228%22 fill=%22%236366F1%22/><path d=%22M19 8v8l4-4h-4v8l-4-4h4z%22 fill=%22white%22/></svg>">
+</head>
+<body>
+    <nav class="floating-navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <span>StudyPlay</span>
+            </div>
+            <div class="nav-links">
+                <a href="https://pranayy1.github.io/studyhub/" class="nav-link">Study</a>
+                <a href="https://pranayy1.github.io/Muse/" class="nav-link">Music</a>
+                <a href="https://pranayy1.github.io/Flix/" class="nav-link">Movies</a>
+                <a href="https://pranayy1.github.io/game/" class="nav-link">Games</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- Hero + Todo -->
+        <div class="hero-todo-grid" style="display:grid;grid-template-columns:1fr 2fr;gap:20px;margin-bottom:32px;">
+            <!-- Todo -->
+            <div class="card" style="padding:20px;">
+                <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:16px;">Today's To-Do List</h2>
+                <div class="todo-input-group">
+                    <input type="text" id="new-todo-input" class="todo-input" placeholder="Add a new task...">
+                    <button id="add-todo-btn" class="btn-add" type="button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                    </button>
+                </div>
+                <ul id="todo-list" class="todo-list"></ul>
+            </div>
+
+            <!-- Hero -->
+            <div class="hero-card">
+                <h1>Focus. Learn. <span>Achieve.</span></h1>
+                <p>Transform your study habits with smart goal tracking and focused learning sessions in a beautiful, distraction-free environment.</p>
+                <button type="button" class="btn-hero">Start Learning</button>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <h2 class="section-title">Your Study Dashboard</h2>
+        <div class="dashboard-grid" style="margin-bottom:32px;">
+            <div class="card">
+                <div class="widget-header">
+                    <div class="widget-icon widget-icon-blue">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="widget-label">Study Time Today</div>
+                        <div class="widget-value" id="study-time">0h 00m</div>
+                        <div class="widget-sub">+0h from yesterday</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="widget-header">
+                    <div class="widget-icon widget-icon-green">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="widget-label">Goals Completed</div>
+                        <div class="widget-value" id="goals-completed">0/0</div>
+                        <div class="widget-sub" id="completion-rate">0% completion rate</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="widget-header">
+                    <div class="widget-icon widget-icon-pink">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="widget-label">Weekly Streak</div>
+                        <div class="widget-value">7 days</div>
+                        <div class="widget-sub">Personal best!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="widget-header">
+                    <div class="widget-icon widget-icon-purple">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="widget-label">Focus Score</div>
+                        <div class="widget-value">85%</div>
+                        <div class="widget-sub">Great progress!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Today's Goal -->
+        <div class="card" style="margin-bottom:32px;">
+            <div class="goal-header">
+                <h2 style="font-size:1.1rem;font-weight:700;">Today's Goal</h2>
+                <span id="goal-status" class="goal-badge">No Goal Set</span>
+            </div>
+            <div id="goal-content">
+                <div style="margin-bottom:12px;">
+                    <div style="font-weight:600;margin-bottom:2px;" id="goal-title"></div>
+                    <div style="font-size:0.85rem;color:var(--text-secondary);" id="goal-description"></div>
+                </div>
+                <div class="goal-progress-row">
+                    <div class="progress-bar">
+                        <div id="goal-progress-fill" class="progress-fill" style="width:0%"></div>
+                    </div>
+                    <span id="goal-progress-text" style="font-size:0.85rem;color:var(--text-secondary);white-space:nowrap;"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="action-grid" style="margin-bottom:32px;">
+            <button type="button" id="pomodoro-btn" class="action-btn">
+                <div class="action-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <span class="action-label">Start Pomodoro</span>
+                <span class="action-desc">25-minute focus session</span>
+            </button>
+            <button type="button" id="generate-plan-btn" class="action-btn">
+                <div class="action-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <span class="action-label">Generate Study Plan</span>
+                <span class="action-desc">Create a plan with AI</span>
+            </button>
+            <button type="button" class="action-btn">
+                <div class="action-icon" style="background:linear-gradient(135deg,#10b981,#059669);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                </div>
+                <span class="action-label">Schedule Review</span>
+                <span class="action-desc">Plan upcoming sessions</span>
+            </button>
+            <button type="button" id="analytics-btn" class="action-btn">
+                <div class="action-icon" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                </div>
+                <span class="action-label">View Analytics</span>
+                <span class="action-desc">Track your progress</span>
+            </button>
+        </div>
+
+        <footer class="site-footer">
+            &copy; <span id="copyright-year"></span> StudyPlay. Made with focus.
+        </footer>
+    </main>
+
+    <!-- LLM Modal -->
+    <div id="llm-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title"></h3>
+                <button id="llm-modal-close" class="modal-close">&times;</button>
+            </div>
+            <div id="modal-content-body" class="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbot-sphere" class="chatbot-sphere">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.97-4.48 9-10 9S1 16.97 1 12 5.48 3 11 3s10 4.03 10 9z"/>
+        </svg>
+    </div>
+    <div id="chatbot-popup" class="chatbot-popup">
+        <div class="chat-header">
+            <span>StudyPlay AI Chat</span>
+            <button id="chatbot-close-btn" style="color:rgba(255,255,255,0.8);font-size:1.2rem;">&times;</button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="message-bubble bot-message">Hello! I'm your StudyPlay AI assistant. Ask me anything about your studies.</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type your message...">
+            <button id="chat-send-btn" type="button">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Analytics Modal -->
+    <div id="analytics-modal" class="modal">
+        <div class="modal-content" style="max-width:860px;">
+            <div class="modal-header">
+                <h2>Study Analytics Dashboard</h2>
+                <button id="analytics-modal-close" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Current Streak</h3>
+                        <div class="streak-box">
+                            <div class="analytics-value" style="color:#10b981;" id="current-streak">7</div>
+                            <div>
+                                <div style="font-weight:600;font-size:0.9rem;">Days</div>
+                                <div style="font-size:0.75rem;color:var(--text-muted);">Keep it up!</div>
+                            </div>
+                        </div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);">
+                            Longest: <strong style="color:var(--primary);" id="longest-streak">12 days</strong>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Time Spent Today</h3>
+                        <div class="analytics-value" style="color:#3b82f6;margin-bottom:8px;" id="today-time">3h 45m</div>
+                        <div class="progress-bar" style="margin-bottom:4px;">
+                            <div class="progress-fill" id="today-progress" style="width:75%"></div>
+                        </div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);">Goal: <strong>5h 0m</strong></div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>This Week</h3>
+                        <div class="analytics-value" style="color:#8b5cf6;margin-bottom:4px;" id="week-time">18h 32m</div>
+                        <div style="font-size:0.8rem;color:var(--text-secondary);">
+                            Sessions: <strong id="week-sessions" style="color:#10b981;">24</strong> &middot;
+                            Avg/day: <strong id="avg-daily" style="color:#3b82f6;">2h 39m</strong>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Achievements</h3>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                            <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#fefce8;border-radius:8px;font-size:0.85rem;">
+                                <span>🥇</span>
+                                <div><div style="font-weight:600;">Week Warrior</div><div style="font-size:0.75rem;color:var(--text-muted);">7 days streak</div></div>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:10px;padding:10px;background:#eff6ff;border-radius:8px;font-size:0.85rem;">
+                                <span>⚡</span>
+                                <div><div style="font-weight:600;">Speed Demon</div><div style="font-size:0.75rem;color:var(--text-muted);">10 tasks in a day</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-card" style="margin-bottom:20px;">
+                    <h3 style="margin-bottom:8px;">Weekly Study Hours</h3>
+                    <div class="chart-container" id="weekly-chart">
+                        <div class="chart-bars">
+                            <div class="chart-bar-group"><div class="chart-bar" style="height:60%;background:#3b82f6;"></div><span class="chart-label">Mon</span></div>
+                            <div class="chart-bar-group"><div class="chart-bar" style="height:80%;background:#3b82f6;"></div><span class="chart-label">Tue</span></div>
+                            <div class="chart-bar-group"><div class="chart-bar" style="height:45%;background:#3b82f6;"></div><span class="chart-label">Wed</span></div>
+                            <div class="chart-bar-group"><div class="chart-bar" style="height:90%;background:#3b82f6;"></div><span class="chart-label">Thu</span></div>
+                            <div class="chart-bar-group"><div class="chart-bar" style="height:70%;background:#3b82f6;"></div><span class="chart-label">Fri</span></div>
+                            <div class="chart-bar-group"><div class="chart-bar" style="height:65%;background:#10b981;"></div><span class="chart-label">Sat</span></div>
+                            <div class="chart-bar-group"><div class="chart-bar" style="height:55%;background:#10b981;"></div><span class="chart-label">Sun</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Daily Goals</h3>
+                        <div style="display:flex;flex-direction:column;gap:10px;">
+                            <div><div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px;"><span>Study Time</span><strong>3h 45m / 5h</strong></div><div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div></div>
+                            <div><div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px;"><span>Tasks Completed</span><strong>7 / 10</strong></div><div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div></div>
+                            <div><div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:4px;"><span>Pomodoro Sessions</span><strong>6 / 8</strong></div><div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div></div>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Subject Breakdown</h3>
+                        <div style="display:flex;flex-direction:column;gap:10px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;"><span>Mathematics</span><div style="display:flex;align-items:center;gap:8px;"><div class="progress-bar" style="width:64px;"><div class="progress-fill" style="width:40%"></div></div><strong>1h 30m</strong></div></div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;"><span>Physics</span><div style="display:flex;align-items:center;gap:8px;"><div class="progress-bar" style="width:64px;"><div class="progress-fill" style="width:35%"></div></div><strong>1h 15m</strong></div></div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;"><span>Chemistry</span><div style="display:flex;align-items:center;gap:8px;"><div class="progress-bar" style="width:64px;"><div class="progress-fill" style="width:25%"></div></div><strong>1h 0m</strong></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pomodoro Modal -->
+    <div id="pomodoro-modal" class="pomodoro-modal">
+        <div class="pomodoro-container">
+            <div class="timer-mode" id="timer-mode">Custom Pomodoro</div>
+            <div class="pomodoro-setup">
+                <div class="input-group"><label for="session-title">Session Title</label><input type="text" id="session-title" class="custom-input" placeholder="e.g., Math Study" value="Focus Session"></div>
+                <div class="input-group"><label for="session-duration">Duration (min)</label><input type="number" id="session-duration" class="custom-input" min="1" max="120" value="25"></div>
+                <div class="input-group"><label for="break-duration">Break (min)</label><input type="number" id="break-duration" class="custom-input" min="1" max="30" value="5"></div>
+                <div class="input-group"><label for="long-break">Long Break</label><input type="number" id="long-break" class="custom-input" min="5" max="60" value="15"></div>
+            </div>
+            <div class="timer-display" id="timer-display">25:00</div>
+            <div class="timer-actions">
+                <button id="start-timer" class="btn-timer btn-timer-start" type="button">Start</button>
+                <button id="pause-timer" class="btn-timer btn-timer-pause" type="button">Pause</button>
+                <button id="reset-timer" class="btn-timer btn-timer-reset" type="button">Reset</button>
+            </div>
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:12px;" id="timer-info">Customizable focus sessions with breaks</div>
+            <button id="close-pomodoro" style="font-size:0.85rem;color:var(--text-secondary);" type="button">Close Timer</button>
+        </div>
+    </div>
+
+    <!-- Floating Timer -->
+    <div id="floating-timer" class="floating-timer">
+        <div class="floating-timer-header">
+            <span class="floating-timer-title" id="floating-title">Focus Session</span>
+            <button id="close-floating" style="color:var(--text-muted);font-size:1.2rem;" type="button">&times;</button>
+        </div>
+        <div class="floating-timer-display" id="floating-display">25:00</div>
+        <div class="floating-timer-controls">
+            <button id="floating-start" class="ft-btn ft-btn-start" type="button">▶</button>
+            <button id="floating-pause" class="ft-btn ft-btn-pause" type="button">⏸</button>
+            <button id="floating-reset" class="ft-btn ft-btn-reset" type="button">⏹</button>
+        </div>
+    </div>
+
+    <!-- Author Credit -->
+    <div class="floating-author">
+        <span class="author-text">
+            Created with
+            <svg class="heart-svg" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            by <strong>Pranay</strong> & <strong>Prabhat</strong>
+        </span>
+    </div>
+
+    <!-- API Key Modal -->
+    <div id="api-key-modal" class="modal">
+        <div class="modal-content" style="max-width:460px;">
+            <div class="modal-header">
+                <h3>Configure API Key</h3>
+            </div>
+            <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:16px;">Enter your Gemini API key to enable AI features. Your key is stored locally in your browser.</p>
+            <input type="password" id="api-key-input" class="custom-input" style="width:100%;margin-bottom:12px;" placeholder="Enter your API key...">
+            <div style="display:flex;gap:10px;">
+                <button id="api-key-save-btn" class="btn-hero" style="flex:1;justify-content:center;" type="button">Save Key</button>
+                <button id="api-key-cancel-btn" style="padding:12px 20px;border:1px solid var(--border);border-radius:var(--radius);font-weight:500;font-size:0.9rem;" type="button">Cancel</button>
+            </div>
+            <p style="font-size:0.75rem;color:var(--text-muted);margin-top:12px;">Get your API key from <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--primary);font-weight:500;">Google AI Studio</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+            document.getElementById('llm-modal-close')?.addEventListener('click', function() { if (window.closeModal) window.closeModal('llm-modal'); });
+            document.getElementById('analytics-modal-close')?.addEventListener('click', function() { if (window.closeAnalytics) window.closeAnalytics(); });
+            document.getElementById('chatbot-close-btn')?.addEventListener('click', function() { if (window.toggleChatbot) window.toggleChatbot(); });
+            document.getElementById('api-key-save-btn')?.addEventListener('click', function() {
+                var input = document.getElementById('api-key-input');
+                if (input && window.setApiKey) { window.setApiKey(input.value); input.value = ''; }
+            });
+            document.getElementById('api-key-cancel-btn')?.addEventListener('click', function() {
+                document.getElementById('api-key-modal')?.classList.remove('show');
+            });
+        });
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

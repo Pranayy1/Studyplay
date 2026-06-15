@@ -1,0 +1,48 @@
+/* author.css - Floating author signature styles */
+
+.floating-author {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.floating-author:hover {
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--text-primary);
+}
+
+.floating-author .author-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.floating-author .heart {
+    color: #ef4444;
+    font-size: 0.9em;
+}
+
+.floating-author strong {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+    .floating-author {
+        bottom: 1rem;
+        right: 1rem;
+        font-size: 0.7rem;
+        padding: 8px 12px;
+    }
+}
