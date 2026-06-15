@@ -43,7 +43,7 @@ function initializeApp() {
         });
     }
 
-    const startLearningBtn = Array.from(document.querySelectorAll('.card.text-center button')).find(b => b.textContent.includes('Start Learning'));
+    const startLearningBtn = document.querySelector('.btn-hero');
     if (startLearningBtn) {
         startLearningBtn.addEventListener('click', () => {
             const pomodoroBtn = document.getElementById('pomodoro-btn');
