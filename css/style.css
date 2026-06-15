@@ -518,6 +518,9 @@ input::placeholder {
 .streak-flame {
     font-size: 20px;
 }
+.streak-flame::after {
+    content: '🔥';
+}
 
 .time-badge {
     display: inline-flex;

@@ -25,7 +25,8 @@ function initializeApp() {
     initTodo();
     const analyticsModule = initAnalytics();
     initPomodoro();
-    initStudyTimer();
+    const studyTimer = initStudyTimer();
+    window.studyTimer = studyTimer;
 
     // Make analytics functions available for other modules
     window.addStudyTime = analyticsModule.addStudyTime;

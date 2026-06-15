@@ -12,6 +12,10 @@ const MODAL_SELECTORS = {
     'pomodoro-modal': {
         title: '.timer-mode',
         body: '.pomodoro-container'
+    },
+    'api-key-modal': {
+        title: 'h3',
+        body: '.space-y-4'
     }
 };
 

@@ -80,8 +80,8 @@ export function initAnalytics() {
         analyticsData.todayTime += minutes;
         analyticsData.weekTime += minutes;
 
-        // Update weeklyHours for current day (0=Sun, 1=Mon, ...)
-        const dayIndex = new Date().getDay();
+        // Map getDay() (0=Sun) to Mon-Sun index (0=Mon, 6=Sun)
+        const dayIndex = (new Date().getDay() + 6) % 7;
         analyticsData.weeklyHours[dayIndex] = (analyticsData.weeklyHours[dayIndex] || 0) + minutes;
 
         const today = new Date().toDateString();
