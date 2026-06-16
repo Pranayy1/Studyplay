@@ -171,5 +171,48 @@ function initializeApp() {
         });
     }
 
+    // Mobile Menu Toggle
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobilePanel = document.getElementById('mobile-menu-panel');
+    const mobileOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileClose = document.getElementById('mobile-menu-close');
+
+    function toggleMobileMenu(open) {
+        const isOpen = open !== undefined ? open : !mobilePanel.classList.contains('show');
+        hamburgerBtn.classList.toggle('active', isOpen);
+        mobilePanel.classList.toggle('show', isOpen);
+        mobileOverlay.classList.toggle('show', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    if (hamburgerBtn && mobilePanel && mobileOverlay) {
+        hamburgerBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMobileMenu();
+        });
+
+        mobileOverlay.addEventListener('click', function() {
+            toggleMobileMenu(false);
+        });
+
+        if (mobileClose) {
+            mobileClose.addEventListener('click', function() {
+                toggleMobileMenu(false);
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobilePanel.classList.contains('show')) {
+                toggleMobileMenu(false);
+            }
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+            link.addEventListener('click', function() {
+                toggleMobileMenu(false);
+            });
+        });
+    }
+
     log('info', 'StudyPlay application initialized successfully');
 }
